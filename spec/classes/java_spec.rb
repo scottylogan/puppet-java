@@ -31,5 +31,9 @@ describe "java" do
       :mode    => '0755',
       :require => 'Package[java]'
     })
+
+    should contain_boxen__env_script("java")
+      .with_content(/^export JAVA_HOME=\/Library\/Java\/JavaVirtualMachines\/jdk1.7.0_42.jdk\/Contents\/Home\s*$/)
+
   end
 end

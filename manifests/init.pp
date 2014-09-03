@@ -34,6 +34,11 @@ class java (
     require => Package['java']
   }
 
+  boxen::env_script { 'java':
+    ensure   => 'present',
+    content  => template('java/env.sh.erb'),
+    priority => lower,
+  }
 
   # Allow 'large' keys locally.
   # http://www.ngs.ac.uk/tools/jcepolicyfiles
