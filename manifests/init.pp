@@ -68,6 +68,12 @@ class java (
     require => File[$sec_dir]
   }
 
+  exec { 'jvmcapabilities fixup':
+    command     => "plutil -replace JavaVM.JVMCapabilities -json '[\"CommandLine\",\"BundledApp\",\"JNI\"]' ${jdk_dir}/Contents/Info.plist",
+    require     => Package['java'],
+    refreshonly => true,
+  }
+
   file { $bl_dir:
     ensure  => 'directory',
     owner   => 'root',
