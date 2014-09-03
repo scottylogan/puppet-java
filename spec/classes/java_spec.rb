@@ -32,6 +32,10 @@ describe "java" do
       :require => 'Package[java]'
     })
 
+    should contain_file("/Library/Java/JavaVirtualMachines/jdk1.7.0_42.jdk/Contents/Home/bundle/Libraries/libserver.dylib").with({
+      :target  => "/Library/Java/JavaVirtualMachines/jdk1.7.0_42.jdk/Contents/Home/jre/lib/server/libjvm.dylib",
+    })
+
     should contain_boxen__env_script("java")
       .with_content(/^export JAVA_HOME=\/Library\/Java\/JavaVirtualMachines\/jdk1.7.0_42.jdk\/Contents\/Home\s*$/)
 

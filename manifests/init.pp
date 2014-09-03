@@ -14,6 +14,7 @@ class java (
   $wrapper = "${boxen::config::bindir}/java"
   $jdk_dir = "/Library/Java/JavaVirtualMachines/jdk1.7.0_${update_version}.jdk"
   $sec_dir = "${jdk_dir}/Contents/Home/jre/lib/security"
+  $bl_dir  = "${jdk_dir}/Contents/Home/bundle/Libraries"
 
   package {
     "jre-7u${update_version}.dmg":
@@ -65,5 +66,19 @@ class java (
     group   => 'wheel',
     mode    => '0664',
     require => File[$sec_dir]
+  }
+
+  file { $bl_dir:
+    ensure  => 'directory',
+    owner   => 'root',
+    group   => 'wheel',
+    mode    => '0775',
+    require => Package['java'],
+  }
+
+  file { "${bl_dir}/libserver.dylib":
+    ensure   => 'link',
+    target   => "${jdk_dir}/Contents/Home/jre/lib/server/libjvm.dylib",
+    require  => File[$bl_dir],
   }
 }
