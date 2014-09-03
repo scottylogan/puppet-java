@@ -14,11 +14,15 @@ class java::browser (
 
     file { '/Library/Application Support/Oracle/Java/javaws':
       ensure => link,
+      owner  => 'root',
+      group  => 'wheel',
       target => '/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/_javaws',
     }
 
     file { '/Library/Application Support/Oracle/Java/Info.plist':
       ensure => link,
+      owner  => 'root',
+      group  => 'wheel',
       target => '/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Enabled.plist',
     }
 
@@ -30,6 +34,8 @@ class java::browser (
 
     file { '/Library/Application Support/Oracle/Java/Info.plist':
       ensure => link,
+      owner  => 'root',
+      group  => 'wheel',
       target => '/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Disabled.plist',
     }
 

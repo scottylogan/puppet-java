@@ -84,6 +84,8 @@ class java (
 
   file { "${bl_dir}/libserver.dylib":
     ensure   => 'link',
+    owner    => 'root',
+    group    => 'wheel',
     target   => "${jdk_dir}/Contents/Home/jre/lib/server/libjvm.dylib",
     require  => File[$bl_dir],
   }
