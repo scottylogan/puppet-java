@@ -1,6 +1,6 @@
 # Java Puppet Module for Boxen
 
-[![Build Status](https://travis-ci.org/boxen/puppet-java.png?branch=master)](https://travis-ci.org/boxen/puppet-java)
+[![Build Status](https://travis-ci.org/scottylogan/puppet-java.png?branch=master)](https://travis-ci.org/scottylogan/puppet-java)
 
 Installs Java 7 and unlimited key length security policy files..
 
