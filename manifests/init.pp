@@ -16,8 +16,15 @@ class java (
   $sec_dir = "${jdk_dir}/Contents/Home/jre/lib/security"
   $bl_dir  = "${jdk_dir}/Contents/Home/bundle/Libraries"
 
-  file { $jdk_dir:
-    ensure => 'directory'
+  file {
+    [
+      $jdk_dir,
+      $sec_dir,
+      $bl_dir,
+    ]:
+      ensure => 'directory',
+      owner  => 'root',
+      group  => 'root',
   }
 
   package {
