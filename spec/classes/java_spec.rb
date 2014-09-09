@@ -4,7 +4,7 @@ describe "java" do
   let(:facts) { default_test_facts }
   let(:params) {
     {
-      :update_version => '42',
+      :update_version => '67',
       :base_download_url => 'https://downloads.test/java'
     }
   }
@@ -12,18 +12,18 @@ describe "java" do
   it do
     should include_class('boxen::config')
 
-    should contain_package('jre-7u42.dmg').with({
+    should contain_package('jre-7u67.dmg').with({
       :ensure   => 'present',
       :alias    => 'java-jre',
       :provider => 'pkgdmg',
-      :source   => 'https://downloads.test/java/jre-7u42-macosx-x64.dmg'
+      :source   => 'https://downloads.test/java/jre-7u67-macosx-x64.dmg'
     })
 
-    should contain_package('jdk-7u42.dmg').with({
+    should contain_package('jdk-7u67.dmg').with({
       :ensure   => 'present',
       :alias    => 'java',
       :provider => 'pkgdmg',
-      :source   => 'https://downloads.test/java/jdk-7u42-macosx-x64.dmg'
+      :source   => 'https://downloads.test/java/jdk-7u67-macosx-x64.dmg'
     })
 
     should contain_file('/test/boxen/bin/java').with({
@@ -32,12 +32,16 @@ describe "java" do
       :require => 'Package[java]'
     })
 
-    should contain_file("/Library/Java/JavaVirtualMachines/jdk1.7.0_42.jdk/Contents/Home/bundle/Libraries/libserver.dylib").with({
-      :target  => "/Library/Java/JavaVirtualMachines/jdk1.7.0_42.jdk/Contents/Home/jre/lib/server/libjvm.dylib",
+    should contain_file('/Library/Java/JavaVirtualMachines/jdk1.7.0_67.jdk/Contents/Home/bundle/Libraries').with({
+      :ensure  => 'directory',
+    })
+
+    should contain_file('/Library/Java/JavaVirtualMachines/jdk1.7.0_67.jdk/Contents/Home/bundle/Libraries/libserver.dylib').with({
+      :target  => '/Library/Java/JavaVirtualMachines/jdk1.7.0_67.jdk/Contents/Home/jre/lib/server/libjvm.dylib',
     })
 
     should contain_boxen__env_script("java")
-      .with_content(/^export JAVA_HOME=\/Library\/Java\/JavaVirtualMachines\/jdk1.7.0_42.jdk\/Contents\/Home\s*$/)
+      .with_content(/^export JAVA_HOME=\/Library\/Java\/JavaVirtualMachines\/jdk1.7.0_67.jdk\/Contents\/Home\s*$/)
 
   end
 end
