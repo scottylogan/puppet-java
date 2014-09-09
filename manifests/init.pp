@@ -16,16 +16,22 @@ class java (
   $sec_dir = "${jdk_dir}/Contents/Home/jre/lib/security"
   $bl_dir  = "${jdk_dir}/Contents/Home/bundle/Libraries"
 
+  file { $jdk_dir:
+    ensure => 'directory'
+  }
+
   package {
     "jre-7u${update_version}.dmg":
       ensure   => present,
       alias    => 'java-jre',
       provider => pkgdmg,
+      require  => File[$jdk_dir],
       source   => $jre_url ;
     "jdk-7u${update_version}.dmg":
       ensure   => present,
       alias    => 'java',
       provider => pkgdmg,
+      require  => File[$jdk_dir],
       source   => $jdk_url ;
   }
 
