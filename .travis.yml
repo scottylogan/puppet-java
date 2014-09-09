@@ -1,6 +1,11 @@
 ---
+language: objective-c
 script: "./script/cibuild"
 gemfile: "this/does/not/exist"
+os:
+  - osx
+before_install:
+  - uname -a
+  - brew update
 rvm:
-  - "1.8.7"
-  - "1.9.3"
+  - "2.0.0"
