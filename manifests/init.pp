@@ -49,7 +49,7 @@ class java (
     ]:
       ensure  => 'directory',
       owner   => 'root',
-      group   => 'root',
+      group   => 'wheel',
       mode    => '0775',
       require => Package['java']
   }
