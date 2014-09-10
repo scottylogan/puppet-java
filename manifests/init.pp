@@ -16,29 +16,16 @@ class java (
   $sec_dir = "${jdk_dir}/Contents/Home/jre/lib/security"
   $bl_dir  = "${jdk_dir}/Contents/Home/bundle/Libraries"
 
-  file {
-    [
-      $jdk_dir,
-      $sec_dir,
-      $bl_dir,
-    ]:
-      ensure => 'directory',
-      owner  => 'root',
-      group  => 'root',
-  }
-
   package {
     "jre-7u${update_version}.dmg":
       ensure   => present,
       alias    => 'java-jre',
       provider => pkgdmg,
-      require  => File[$jdk_dir],
       source   => $jre_url ;
     "jdk-7u${update_version}.dmg":
       ensure   => present,
       alias    => 'java',
       provider => pkgdmg,
-      require  => File[$jdk_dir],
       source   => $jdk_url ;
   }
 
@@ -54,16 +41,21 @@ class java (
     priority => lower,
   }
 
+  file {
+    [
+      $jdk_dir,
+      $sec_dir,
+      $bl_dir,
+    ]:
+      ensure  => 'directory',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0775',
+      require => Package['java']
+  }
+
   # Allow 'large' keys locally.
   # http://www.ngs.ac.uk/tools/jcepolicyfiles
-
-  file { $sec_dir:
-    ensure  => 'directory',
-    owner   => 'root',
-    group   => 'wheel',
-    mode    => '0775',
-    require => Package['java']
-  }
 
   file { "${sec_dir}/local_policy.jar":
     source  => 'puppet:///modules/java/local_policy.jar',
@@ -87,19 +79,14 @@ class java (
     refreshonly => true,
   }
 
-  file { $bl_dir:
-    ensure  => 'directory',
-    owner   => 'root',
-    group   => 'wheel',
-    mode    => '0775',
-    require => Package['java'],
-  }
-
   file { "${bl_dir}/libserver.dylib":
     ensure   => 'link',
     owner    => 'root',
     group    => 'wheel',
     target   => "${jdk_dir}/Contents/Home/jre/lib/server/libjvm.dylib",
-    require  => File[$bl_dir],
+    require  => [
+                  File[$bl_dir],
+                  Pacakge['java-jre'],
+                ]
   }
 }
