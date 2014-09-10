@@ -86,7 +86,7 @@ class java (
     target   => "${jdk_dir}/Contents/Home/jre/lib/server/libjvm.dylib",
     require  => [
                   File[$bl_dir],
-                  Pacakge['java-jre'],
+                  Package['java-jre'],
                 ]
   }
 }
