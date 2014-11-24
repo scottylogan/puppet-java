@@ -1,10 +1,10 @@
-# Public: installs java jre-7u51 and JCE unlimited key size policy files
+# Public: installs java jre-7u71 and JCE unlimited key size policy files
 #
 # Examples
 #
 #    include java
 class java (
-  $update_version = '67',
+  $update_version = '71',
   $base_download_url = 'https://s3.amazonaws.com/boxen-downloads/java'
 ) {
   include boxen::config
