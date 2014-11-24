@@ -9,12 +9,15 @@ class java (
 ) {
   include boxen::config
 
-  $jre_url = "${base_download_url}/jre-7u${update_version}-macosx-x64.dmg"
-  $jdk_url = "${base_download_url}/jdk-7u${update_version}-macosx-x64.dmg"
+  $dmg_sfx = "7u${update_version}-macosx-x64.dmg"
+  $jre_url = "${base_download_url}/jre-${dmg_sfx}"
+  $jdk_url = "${base_download_url}/jdk-${dmg_sfx}"
   $wrapper = "${boxen::config::bindir}/java"
-  $jdk_dir = "/Library/Java/JavaVirtualMachines/jdk1.7.0_${update_version}.jdk"
+  $jvm_dir = "/Library/Java/JavaVirtualMachines"
+  $jdk_dir = "${jvm_dir}/jdk1.7.0_${update_version}.jdk"
   $sec_dir = "${jdk_dir}/Contents/Home/jre/lib/security"
-  $bl_dir  = "${jdk_dir}/Contents/Home/bundle/Libraries"
+  $bdl_dir = "${jdk_dir}/Contents/Home/bundle"
+  $bl_dir  = "${bdl_dir}/Libraries"
 
   package {
     "jre-7u${update_version}.dmg":
@@ -45,6 +48,7 @@ class java (
     [
       $jdk_dir,
       $sec_dir,
+      $bdl_dir,
       $bl_dir,
     ]:
       ensure  => 'directory',
